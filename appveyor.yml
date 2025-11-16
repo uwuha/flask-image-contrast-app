@@ -1,18 +1,17 @@
-image: Ubuntu2204  # Используем Linux образ для простоты
+version: 1.0.{build}
+
+image: Visual Studio 2022
 
 environment:
-  PYTHON: "3.8"
+  matrix:
+    - PYTHON: "C:\\Python38"
 
 install:
-  - python -m pip install --upgrade pip
-  - pip install flask pillow matplotlib
+  - cmd: "%PYTHON%\\python.exe -m pip install --upgrade pip"
+  - cmd: "%PYTHON%\\Scripts\\pip.exe install -r requirements.txt"
 
-build: off  # Отключаем сборку, так как это Python проект
+build: off
 
 test_script:
-  - python --version
-  - pip list
-  - python -c "print('Basic test passed')"
-
-on_success:
-  - echo "Build completed successfully!"
+  - cmd: "%PYTHON%\\python.exe --version"
+  - cmd: "%PYTHON%\\python.exe -c \"print('Build successful')\""
